@@ -7,6 +7,21 @@
 
 import SwiftUI
 
+struct LargeIndigoTitle: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .foregroundStyle(.indigo)
+            .font(.largeTitle.weight(.bold))
+    }
+}
+
+extension View {
+    func largeIndigoTitle() -> some View {
+        modifier(LargeIndigoTitle())
+    }
+}
+
+
 struct ContentView: View {
     @State private var countries = ["Estonia", "France", "Germany", "Ireland", "Italy", "Nigeria", "Poland", "Spain", "UK", "US"].shuffled()
     @State private var correctAnswer = Int.random(in: 0...2)
@@ -37,15 +52,13 @@ struct ContentView: View {
                             .foregroundStyle(.secondary)
                             .font(.subheadline.weight(.heavy))
                         Text(countries[correctAnswer])
-                            .font(.largeTitle.weight(.semibold))
+                            .largeIndigoTitle()
                     }
                     ForEach(0..<3) { number in
                         Button {
                             flagTaped(number)
                         } label: {
-                            Image(countries[number])
-                                .clipShape(.capsule)
-                                .shadow(radius: 5)
+                            FlagImage(imageName: countries[number])
                         }
                     }
                 }
@@ -112,4 +125,5 @@ struct ContentView: View {
 #Preview {
     ContentView()
 }
+
 
